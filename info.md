@@ -7,8 +7,8 @@ If you have already set up the Ambilight (Light) component, configuring this com
 If you have not configured any other Philips TV components, use the tool linked in the [Ambilight (Light) component](https://github.com/jomwells/ambilights) GitHub docs to obtain your username and password.
 ```
 switch:
-  - platform: philips_ambihue
-    name: Ambilight+hue
+  - platform: philips_ambilight+hue
+    name: Ambilight+Hue
     host: 192.168.1.XXX
     username: !secret philips_username
     password: !secret philips_password
