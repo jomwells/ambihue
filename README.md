@@ -15,7 +15,7 @@ If you have not setup any other Philips TV components, use the tool linked in th
 ```
 switch:
   - platform: philips_ambilight+hue
-    name: Ambilight+hue
+    name: Ambilight+Hue
     host: 192.168.1.XXX
     username: !secret philips_username
     password: !secret philips_password
