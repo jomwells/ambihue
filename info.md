@@ -1,10 +1,10 @@
-# Phillips TV Ambilight+Hue (Switch) Component
-A Switch component for automating the control of the Ambilight+hue setting on a Phillips TV, this reveals the current status of the menu setting to Home Assistant, and allows for remote or automated toggling.
+# Philips TV Ambilight+Hue (Switch) Component
+A Switch component for automating the control of the Ambilight+hue setting on a Philips TV, this reveals the current status of the menu setting to Home Assistant, and allows for remote or automated toggling.
 ## Configuration
 
 If you have already set up the Ambilight (Light) component, configuring this component is very simple, enter the same username and password as for the ambilight component in the configuration.yaml, along with the IP of the TV, and restart home assistant:
 
-If you have not configured any other phillips TV components, use the tool linked in the [Ambilight (Light) component](https://github.com/jomwells/ambilights) GitHub docs to obtain your username and password.
+If you have not configured any other Philips TV components, use the tool linked in the [Ambilight (Light) component](https://github.com/jomwells/ambilights) GitHub docs to obtain your username and password.
 ```
 switch:
   - platform: philips_ambihue
