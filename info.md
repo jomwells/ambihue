@@ -1,8 +1,7 @@
 # Phillips TV Ambilight+Hue (Switch) Component
 For automating the control of the Ambilight+hue setting, use the additional Ambihue (Switch) component, this enables the status of the setting to be determined by Home Assistant, and allows for remote or automated toggling.
 ## Installation
-If you have already set up the [Ambilight component](https://github.com/jomwells/ambilights), installing this switch component is very simple, copy the ```phillips_ambihue```  directory into your ```config/custom_components/``` directory,
-enter the same username and password as for the ambilight component in the configuration.yaml as follows:
+If you have already set up the [Ambilight component](https://github.com/jomwells/ambilights), you can use the same username and password as for the ambilight component in the configuration.yaml as follows:
 ```
 switch:
   - platform: philips_ambihue
