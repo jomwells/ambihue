@@ -14,7 +14,7 @@ enter the same username and password as for the ambilight component in the confi
 If you have not setup any other phillips TV components, use the tool linked in the Ambilight (Light) component docs to obtain your username and password.
 ```
 switch:
-  - platform: philips_ambihue
+  - platform: philips_ambilight+hue
     name: Ambilight+hue
     host: 192.168.1.XXX
     username: !secret philips_username
