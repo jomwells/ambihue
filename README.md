@@ -19,7 +19,11 @@ switch:
     host: 192.168.1.XXX
     username: !secret philips_username
     password: !secret philips_password
+    id: 2131230774 # ambilight_hue_off node id. Default is 2131230774, but some newer TVs use 2131230778 instead.
     scan_interval: 5
 ```
 
+If the component is not working, try setting `2131230778` as the `id` in the config 
+
 *note:* there is often a noticeable lag between Home Assistant sending the request to toggle the setting, and receiving a status update from the API, for this reason, it is advised that you reduce your `scan_interval` (in seconds) to suit your needs.
+
