@@ -1,3 +1,4 @@
+#import logging
 import json
 import string
 import requests
@@ -14,17 +15,17 @@ DEFAULT_HOST = '127.0.0.1'
 DEFAULT_USER = 'user'
 DEFAULT_PASS = 'pass'
 DEFAULT_NAME = 'Ambilight+Hue'
-DEFAULT_ID = '2131230774'
-BASE_URL = 'https://{0}:1926/6/{1}' # for older philps tv's, try changing this to 'http://{0}:1925/1/{1}'
+BASE_URL = 'http://{0}:1925/6/{1}' # for older philps tv's, try changing this to 'http://{0}:1925/1/{1}'
 TIMEOUT = 5.0
 CONNFAILCOUNT = 5
+
+#_LOGGER = logging.getLogger(__name__)
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_HOST, default=DEFAULT_HOST): cv.string,
     vol.Required(CONF_USERNAME, default=DEFAULT_USER): cv.string,
     vol.Required(CONF_PASSWORD, default=DEFAULT_PASS): cv.string,
     vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
-    vol.Optional(CONF_ID, default=DEFAULT_ID): cv.string
 })
 
 def setup_platform(hass, config, add_devices, discovery_info=None):
@@ -32,17 +33,15 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     host = config.get(CONF_HOST)
     user = config.get(CONF_USERNAME)
     password = config.get(CONF_PASSWORD)
-    nodeId = config.get(CONF_ID)
-    add_devices([AmbiHue(name, host, user, password, nodeId)])
+    add_devices([AmbiHue(name, host, user, password)])
 
 class AmbiHue(SwitchEntity):
 
-    def __init__(self, name, host, user, password, nodeId):
+    def __init__(self, name, host, user, password):
         self._name = name
         self._host = host
         self._user = user
         self._password = password
-        self._nodeId = int(nodeId)
         self._state = False
         self._connfail = 0
         self._available = False
@@ -67,19 +66,20 @@ class AmbiHue(SwitchEntity):
 
 
     def turn_on(self, **kwargs):
-        self._postReq('menuitems/settings/update', {"values":[{"value":{"Nodeid":self._nodeId,"Controllable":"true","Available":"true","data":{"value":"true"}}}]} )
+        self._postReq('HueLamp/power', {"power":"On"}, True )
         self._state = True
 
     def turn_off(self, **kwargs):
-        self._postReq('menuitems/settings/update', {"values":[{"value":{"Nodeid":self._nodeId,"Controllable":"true","Available":"true","data":{"value":"false"}}}]} )
+        self._postReq('HueLamp/power', {"power":"Off"}, True )
         self._state = False
 
     def getState(self):
-        fullstate = self._postReq('menuitems/settings/current', {'nodes':[{'nodeid':self._nodeId}]})
+        fullstate = self._getReq('HueLamp/power')
+        #_LOGGER.warn(fullstate)
         if fullstate:
             self._available = True
-            ahstat = fullstate['values'][0]['value']['data']['value']
-            if ahstat == True:
+            ahstat = fullstate['power']
+            if ahstat == 'On':
                 self._state = True
             else:
                 self._state = False
@@ -94,23 +94,26 @@ class AmbiHue(SwitchEntity):
         try:
             if self._connfail:
                 self._connfail -= 1
-                return None
+                return False
             resp = self._session.get(BASE_URL.format(self._host, path), verify=False, auth=HTTPDigestAuth(self._user, self._password), timeout=TIMEOUT)
             self.on = True
             return json.loads(resp.text)
         except requests.exceptions.RequestException as err:
             self._connfail = CONNFAILCOUNT
             self.on = False
-            return None
+            return False
 
-    def _postReq(self, path, data):
+    def _postReq(self, path, data, write):
         try:
             if self._connfail:
                 self._connfail -= 1
                 return False
             resp = self._session.post(BASE_URL.format(self._host, path), data=json.dumps(data), verify=False, auth=HTTPDigestAuth(self._user, self._password), timeout=TIMEOUT)
-            self.on = True
-            return json.loads(resp.text)
+            #self.on = True
+            if write:
+                return True
+            else:
+                return json.loads(resp.text)
         except requests.exceptions.RequestException as err:
             self._connfail = CONNFAILCOUNT
             self.on = False
