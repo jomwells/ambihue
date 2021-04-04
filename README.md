@@ -1,15 +1,36 @@
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
+[![Community Forum](https://img.shields.io/badge/Community-Forum-41BDF5.svg?style=popout)](https://community.home-assistant.io/t/emulated-color-temp-light/291271)
+[![paypalme_badge](https://img.shields.io/badge/Donate-PayPal-0070ba?style=flat)](https://paypal.me/MrGroch)
+
 # Philips TV Ambilight+Hue (Switch) Component
 A Switch component for automating the control of the Ambilight+hue setting on a Philips TV, this reveals the current status of the menu setting to Home Assistant, and allows for remote or automated toggling.
+
+Forked from not maintained for a long time jomwell's repo:
+https://github.com/jomwells/ambihue
+
 ## Installation
 
-#### Option 1: (recommended)
-This repository is compatible with the Home Assistant Community Store ([HACS](https://community.home-assistant.io/t/custom-component-hacs/121727)).
+### Using [HACS](https://hacs.xyz/) (recommended)
 
-After installing HACS, install 'Philips Ambilight+Hue' from the store, and use the ```configuration.yaml``` example below.
+This integration can be added to HACS as a [custom repository](https://hacs.xyz/docs/faq/custom_repositories):
+* URL: `https://github.com/Mr-Groch/ambihue`
+* Category: `Integration`
 
-#### Option 2: (manual)
-If you have already set up the [Ambilight (Light) component](https://github.com/jomwells/ambilights), installing this component is very simple, copy the ```philips_ambilight+hue``` directory into your ```config/custom_components/``` directory,
-enter the same username and password as for the ambilight component in the configuration.yaml, along with the IP of the TV, and restart home assistant:
+After adding a custom repository you can use HACS to install this integration using user interface.
+
+### Manual
+
+1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
+2. If you do not have a `custom_components` directory (folder) there, you need to create it.
+3. In the `custom_components` directory (folder) create a new folder called `philips_ambilight+hue`.
+4. Download _all_ the files from the `custom_components/philips_ambilight+hue/` directory (folder) in this repository.
+5. Place the files you downloaded in the new directory (folder) you created.
+6. [Configure](#Configuration) custom component in `configuration.yaml` file.
+7. Restart Home Assistant.
+
+## Configuration
+
+After installation of the custom component, it needs to be configured in `configuration.yaml` file.
 
 If you have not setup any other Philips TV components, use the tool linked in the Ambilight (Light) component docs to obtain your username and password.
 ```
@@ -19,11 +40,8 @@ switch:
     host: 192.168.1.XXX
     username: !secret philips_username
     password: !secret philips_password
-    id: 2131230774 # ambilight_hue_off node id. Default is 2131230774, but some newer TVs use 2131230778 instead.
     scan_interval: 5
 ```
-
-If the component is not working, try setting `2131230778` as the `id` in the config 
 
 *note:* there is often a noticeable lag between Home Assistant sending the request to toggle the setting, and receiving a status update from the API, for this reason, it is advised that you reduce your `scan_interval` (in seconds) to suit your needs.
 
