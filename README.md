@@ -1,5 +1,6 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
-[![paypalme_badge](https://img.shields.io/badge/Donate-PayPal-0070ba?style=flat)](https://paypal.me/MrGroch)
+[![paypalme_badge](https://img.shields.io/badge/Donate-PayPal-0070ba)](https://paypal.me/MrGroch)
+[![Buy me a coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/MrGroch)
 
 # Philips TV Ambilight+Hue (Switch) Component
 A Switch component for automating the control of the Ambilight+hue setting on a Philips TV, this reveals the current status of the menu setting to Home Assistant, and allows for remote or automated toggling.
