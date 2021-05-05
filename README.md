@@ -37,10 +37,14 @@ switch:
   - platform: philips_ambilight+hue
     name: Ambilight+Hue
     host: 192.168.1.XXX
+    secured_transport: true
+    api_version: 6
     username: !secret philips_username
     password: !secret philips_password
     scan_interval: 5
 ```
+
+For older Philips TV try to change `secured_transport: false` (`username:` and `password:` is not required then). If this still doesn't help change also `api_version: 1`
 
 *note:* there is often a noticeable lag between Home Assistant sending the request to toggle the setting, and receiving a status update from the API, for this reason, it is advised that you reduce your `scan_interval` (in seconds) to suit your needs.
 
