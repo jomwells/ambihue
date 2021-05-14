@@ -4,7 +4,7 @@ A Switch component for automating the control of the Ambilight+hue setting on a 
 
 If you have already set up the Ambilight (Light) component, configuring this component is very simple, enter the same username and password as for the ambilight component in the configuration.yaml, along with the IP of the TV, and restart home assistant:
 
-If you have not configured any other Philips TV components, use the tool linked in the [Ambilight (Light) component](https://github.com/jomwells/ambilights) GitHub docs to obtain your username and password.
+If you have not configured any other Philips TV components, use [this tool](https://github.com/suborb/philips_android_tv) to obtain your username and password.
 ```
 switch:
   - platform: philips_ambilight+hue
