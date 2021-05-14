@@ -1,0 +1,5 @@
+{
+  "name": "Philips Ambilight+Hue Switch",
+  "domains": "switch",
+  "iot_class": "Local Polling"
+}
