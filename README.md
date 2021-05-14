@@ -32,7 +32,7 @@ After adding a custom repository you can use HACS to install this integration us
 
 After installation of the custom component, it needs to be configured in `configuration.yaml` file.
 
-If you have not setup any other Philips TV components, use the tool linked in the Ambilight (Light) component docs to obtain your username and password.
+If you have not setup any other Philips TV components, use [this tool](https://github.com/suborb/philips_android_tv) to obtain your username and password.
 ```
 switch:
   - platform: philips_ambilight+hue
