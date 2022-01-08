@@ -17,6 +17,7 @@ DEFAULT_SECURED_TRANSPORT = True
 DEFAULT_USER = 'user'
 DEFAULT_PASS = 'pass'
 DEFAULT_NAME = 'Ambilight+Hue'
+DEFAULT_ICON = 'mdi:television-ambient-light'
 BASE_URL = '{0}://{1}:{2}/{3}/{4}'
 TIMEOUT = 5.0
 CONNFAILCOUNT = 5
@@ -39,11 +40,32 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     secured_transport = config.get('secured_transport')
     user = config.get(CONF_USERNAME)
     password = config.get(CONF_PASSWORD)
-    add_devices([AmbiHue(name, host, api_version, secured_transport, user, password)])
+    unique_id = None
+    
+    try:
+        if secured_transport:
+            protocol = "https"
+            port = 1926
+        else:
+            protocol = "http"
+            port = 1925
+        session = requests.Session()
+        session.mount('https://', HTTPAdapter(pool_connections=1))
+        resp = session.get(BASE_URL.format(protocol, host, port, api_version, 'system'), verify=False, auth=HTTPDigestAuth(user, password), timeout=TIMEOUT)
+        fullstate = json.loads(resp.text)
+        if fullstate:
+            if 'serialnumber' in fullstate:
+                unique_id = fullstate['serialnumber']
+            elif 'serialnumber_encrypted' in fullstate:
+                unique_id = fullstate['serialnumber_encrypted']
+    except requests.exceptions.RequestException as err:
+        pass
+    
+    add_devices([AmbiHue(name, host, api_version, secured_transport, user, password, unique_id)])
 
 class AmbiHue(SwitchEntity):
 
-    def __init__(self, name, host, api_version, secured_transport, user, password):
+    def __init__(self, name, host, api_version, secured_transport, user, password, unique_id):
         self._name = name
         self._host = host
         self._api_version = api_version
@@ -60,6 +82,8 @@ class AmbiHue(SwitchEntity):
         self._available = False
         self._session = requests.Session()
         self._session.mount('https://', HTTPAdapter(pool_connections=1))
+        self._unique_id = unique_id
+        self._icon = DEFAULT_ICON
 
     @property
     def name(self):
@@ -76,7 +100,16 @@ class AmbiHue(SwitchEntity):
     @property
     def should_poll(self):
         return True
-
+        
+    @property
+    def unique_id(self):
+        """Return the unique id"""
+        return self._unique_id
+        
+    @property
+    def icon(self):
+        """Icon to use in the frontend."""
+        return self._icon
 
     def turn_on(self, **kwargs):
         self._postReq('HueLamp/power', {"power":"On"}, True )
