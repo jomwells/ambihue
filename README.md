@@ -18,30 +18,23 @@ This integration can be installed using HACS. To do it search for `Philips Ambil
 
 1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
 2. If you do not have a `custom_components` directory (folder) there, you need to create it.
-3. In the `custom_components` directory (folder) create a new folder called `philips_ambilight+hue`.
-4. Download _all_ the files from the `custom_components/philips_ambilight+hue/` directory (folder) in this repository.
+3. In the `custom_components` directory (folder) create a new folder called `philips_ambilight_hue`.
+4. Download _all_ the files from the `custom_components/philips_ambilight_hue/` directory (folder) in this repository.
 5. Place the files you downloaded in the new directory (folder) you created.
-6. [Configure](#Configuration) custom component in `configuration.yaml` file.
-7. Restart Home Assistant.
+6. Restart Home Assistant.
+7. [Configure](#Configuration) custom component using Config Flow UI.
+
 
 ## Configuration
 
-After installation of the custom component, it needs to be configured in `configuration.yaml` file.
+After installation of the custom component, it needs to be added using **Config Flow UI**.
 
-If you have not setup any other Philips TV components, use [this tool](https://github.com/suborb/philips_android_tv) to obtain your username and password.
-```
-switch:
-  - platform: philips_ambilight+hue
-    name: Ambilight+Hue
-    host: 192.168.1.XXX
-    secured_transport: true
-    api_version: 6
-    username: !secret philips_username
-    password: !secret philips_password
-    scan_interval: 5
-```
+To configure this integration go to: _Configuration_ -> _Integrations_ -> _Add integration_ -> _Philips TV Ambilight+Hue_.
 
-For older Philips TV try to change `secured_transport: false` (`username:` and `password:` is not required then). If this still doesn't help change also `api_version: 1`
+You can also use following [My Home Assistant](http://my.home-assistant.io/) link
 
-*note:* there is often a noticeable lag between Home Assistant sending the request to toggle the setting, and receiving a status update from the API, for this reason, it is advised that you reduce your `scan_interval` (in seconds) to suit your needs.
+[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=philips_ambilight_hue)
 
+Configuration steps are similar to official Philips TV integration, so if you need help look [here](https://www.home-assistant.io/integrations/philips_js/).
+
+*note:* there is often a noticeable lag between Home Assistant sending the request to toggle the setting, and receiving a status update from the API.
