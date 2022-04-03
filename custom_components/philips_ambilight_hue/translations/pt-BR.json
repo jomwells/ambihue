@@ -1,0 +1,28 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "O dispositivo já está configurado"
+        },
+        "error": {
+            "cannot_connect": "Falhou ao conectar",
+            "invalid_pin": "PIN invalido",
+            "pairing_failure": "Não foi possível parear: {error_id}",
+            "unknown": "Erro inesperado"
+        },
+        "step": {
+            "pair": {
+                "data": {
+                    "pin": "Código PIN"
+                },
+                "description": "Digite o PIN exibido na sua TV",
+                "title": "Parear"
+            },
+            "user": {
+                "data": {
+                    "api_version": "Versão da API",
+                    "host": "Host"
+                }
+            }
+        }
+    }
+}
