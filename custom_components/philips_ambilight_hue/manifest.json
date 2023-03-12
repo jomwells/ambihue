@@ -1,7 +1,7 @@
 {
   "domain": "philips_ambilight_hue",
   "name": "Philips TV Ambilight+Hue",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "documentation": "https://github.com/Mr-Groch/ambihue",
   "issue_tracker": "https://github.com/Mr-Groch/ambihue/issues",
   "codeowners": ["@jomwells","@Mr-Groch"],
